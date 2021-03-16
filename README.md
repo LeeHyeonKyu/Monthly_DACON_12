@@ -9,6 +9,7 @@
 실험용 Code가 Dacon Facebook에 게시됨.(21.03.15)
 
 부딪힌 문제와 해결방안
+1. Model Search : RepVGG -> EfficientNet b0 -> b4 -> b7
 
 한계점
 
