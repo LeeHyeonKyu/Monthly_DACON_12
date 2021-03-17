@@ -10,6 +10,7 @@
 
 부딪힌 문제와 해결방안
 1. Model Search : RepVGG -> EfficientNet b0 -> b4 -> b7
+2. Option Search : Augmentations, Hyper parameters
 
 한계점
 
