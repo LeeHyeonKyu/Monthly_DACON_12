@@ -11,7 +11,7 @@
 부딪힌 문제와 해결방안
 1. Model Search : RepVGG -> EfficientNet b0 -> b4 -> b7
 2. Option Search : Augmentations, Hyper parameters
-3. Training Time Problem : Use Multi Session
+3. Training Time Problem : Use Multi Session (50 Epochs)
 4. Ensemble : With Team Predictions
 
 한계점
