@@ -13,6 +13,7 @@
 2. Option Search : Augmentations, Hyper parameters
 3. Training Time Problem : Use Multi Session (50 Epochs)
 4. Ensemble : With Team Predictions
+5. Code Submit : Build Docker Env
 
 한계점
 
