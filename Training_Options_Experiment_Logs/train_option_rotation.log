@@ -1,0 +1,385 @@
+-----Transforms-----
+train_transform : Compose(
+    ToPILImage()
+    RandomHorizontalFlip(p=0.2)
+    RandomVerticalFlip(p=0.2)
+    RandomRotation(degrees=[-10.0, 10.0], resample=False, expand=False)
+    ToTensor()
+)
+valid_transform : Compose(
+    ToTensor()
+)
+-----Train Option-----
+batch_size : 16,	lr : 0.001,	epochs : 20
+lr_scheduler_step : 5,	lr_scheduler_gamma : 0.75
+
+epoch : 0
+	train_acc : 0.52329,	train_loss : 0.6971
+	valid_acc : 0.51962,	valid_loss : 0.72793
+epoch : 1
+	train_acc : 0.53827,	train_loss : 0.68922
+	valid_acc : 0.53048,	valid_loss : 0.79802
+epoch : 2
+	train_acc : 0.55236,	train_loss : 0.68465
+	valid_acc : 0.53875,	valid_loss : 0.70067
+epoch : 3
+	train_acc : 0.5644,	train_loss : 0.68039
+	valid_acc : 0.53183,	valid_loss : 0.70422
+epoch : 4
+	train_acc : 0.57038,	train_loss : 0.67739
+	valid_acc : 0.54471,	valid_loss : 0.69252
+epoch : 5
+	train_acc : 0.58587,	train_loss : 0.66881
+	valid_acc : 0.56115,	valid_loss : 0.69418
+epoch : 6
+	train_acc : 0.59988,	train_loss : 0.66035
+	valid_acc : 0.55404,	valid_loss : 0.68936
+epoch : 7
+	train_acc : 0.61219,	train_loss : 0.6522
+	valid_acc : 0.54721,	valid_loss : 0.71504
+epoch : 8
+	train_acc : 0.62447,	train_loss : 0.64307
+	valid_acc : 0.55808,	valid_loss : 0.69115
+epoch : 9
+	train_acc : 0.63743,	train_loss : 0.63436
+	valid_acc : 0.56817,	valid_loss : 0.70097
+epoch : 10
+	train_acc : 0.66183,	train_loss : 0.60921
+	valid_acc : 0.56173,	valid_loss : 0.69951
+epoch : 11
+	train_acc : 0.68209,	train_loss : 0.58783
+	valid_acc : 0.56096,	valid_loss : 0.72627
+epoch : 12
+	train_acc : 0.70286,	train_loss : 0.56362
+	valid_acc : 0.57221,	valid_loss : 0.72419
+epoch : 13
+	train_acc : 0.71784,	train_loss : 0.54489
+	valid_acc : 0.56587,	valid_loss : 0.75147
+epoch : 14
+	train_acc : 0.73752,	train_loss : 0.51799
+	valid_acc : 0.5726,	valid_loss : 0.78455
+epoch : 15
+	train_acc : 0.77288,	train_loss : 0.46842
+	valid_acc : 0.57038,	valid_loss : 0.80881
+epoch : 16
+	train_acc : 0.79913,	train_loss : 0.42591
+	valid_acc : 0.56923,	valid_loss : 0.82845
+epoch : 17
+	train_acc : 0.82132,	train_loss : 0.39071
+	valid_acc : 0.57029,	valid_loss : 0.84306
+epoch : 18
+	train_acc : 0.84236,	train_loss : 0.35434
+	valid_acc : 0.57163,	valid_loss : 0.92954
+epoch : 19
+	train_acc : 0.85505,	train_loss : 0.32706
+	valid_acc : 0.56885,	valid_loss : 0.9497
+==================== time : 453.88162112236023
+
+-----Transforms-----
+train_transform : Compose(
+    ToPILImage()
+    RandomHorizontalFlip(p=0.2)
+    RandomVerticalFlip(p=0.2)
+    RandomRotation(degrees=[-20.0, 20.0], resample=False, expand=False)
+    ToTensor()
+)
+valid_transform : Compose(
+    ToTensor()
+)
+-----Train Option-----
+batch_size : 16,	lr : 0.001,	epochs : 20
+lr_scheduler_step : 5,	lr_scheduler_gamma : 0.75
+
+epoch : 0
+	train_acc : 0.52233,	train_loss : 0.69619
+	valid_acc : 0.52683,	valid_loss : 0.71184
+epoch : 1
+	train_acc : 0.53637,	train_loss : 0.68948
+	valid_acc : 0.5325,	valid_loss : 0.70772
+epoch : 2
+	train_acc : 0.5445,	train_loss : 0.68612
+	valid_acc : 0.5424,	valid_loss : 0.69269
+epoch : 3
+	train_acc : 0.55584,	train_loss : 0.68343
+	valid_acc : 0.5376,	valid_loss : 0.72439
+epoch : 4
+	train_acc : 0.56111,	train_loss : 0.67977
+	valid_acc : 0.54029,	valid_loss : 0.70165
+epoch : 5
+	train_acc : 0.57534,	train_loss : 0.6735
+	valid_acc : 0.555,	valid_loss : 0.68877
+epoch : 6
+	train_acc : 0.58421,	train_loss : 0.66976
+	valid_acc : 0.55558,	valid_loss : 0.68853
+epoch : 7
+	train_acc : 0.59221,	train_loss : 0.66385
+	valid_acc : 0.56577,	valid_loss : 0.68589
+epoch : 8
+	train_acc : 0.59978,	train_loss : 0.65926
+	valid_acc : 0.56269,	valid_loss : 0.68547
+epoch : 9
+	train_acc : 0.60579,	train_loss : 0.6534
+	valid_acc : 0.5501,	valid_loss : 0.71341
+epoch : 10
+	train_acc : 0.62709,	train_loss : 0.63998
+	valid_acc : 0.57971,	valid_loss : 0.68771
+epoch : 11
+	train_acc : 0.63918,	train_loss : 0.63017
+	valid_acc : 0.57394,	valid_loss : 0.68398
+epoch : 12
+	train_acc : 0.6531,	train_loss : 0.61608
+	valid_acc : 0.57904,	valid_loss : 0.70227
+epoch : 13
+	train_acc : 0.66401,	train_loss : 0.60627
+	valid_acc : 0.58327,	valid_loss : 0.69499
+epoch : 14
+	train_acc : 0.67637,	train_loss : 0.59399
+	valid_acc : 0.57644,	valid_loss : 0.70295
+epoch : 15
+	train_acc : 0.69993,	train_loss : 0.56382
+	valid_acc : 0.58144,	valid_loss : 0.7148
+epoch : 16
+	train_acc : 0.72144,	train_loss : 0.53905
+	valid_acc : 0.57942,	valid_loss : 0.71146
+epoch : 17
+	train_acc : 0.74005,	train_loss : 0.51288
+	valid_acc : 0.57942,	valid_loss : 0.74456
+epoch : 18
+	train_acc : 0.75921,	train_loss : 0.4896
+	valid_acc : 0.58192,	valid_loss : 0.76558
+epoch : 19
+	train_acc : 0.77615,	train_loss : 0.46176
+	valid_acc : 0.58433,	valid_loss : 0.76387
+==================== time : 457sec
+
+-----Transforms-----
+train_transform : Compose(
+    ToPILImage()
+    RandomHorizontalFlip(p=0.2)
+    RandomVerticalFlip(p=0.2)
+    RandomRotation(degrees=[-40.0, 40.0], resample=False, expand=False)
+    ToTensor()
+)
+valid_transform : Compose(
+    ToTensor()
+)
+-----Train Option-----
+batch_size : 16,	lr : 0.001,	epochs : 20
+lr_scheduler_step : 5,	lr_scheduler_gamma : 0.75
+
+epoch : 0
+	train_acc : 0.51983,	train_loss : 0.69761
+	valid_acc : 0.53058,	valid_loss : 0.71068
+epoch : 1
+	train_acc : 0.5376,	train_loss : 0.68967
+	valid_acc : 0.54442,	valid_loss : 0.69347
+epoch : 2
+	train_acc : 0.54531,	train_loss : 0.6862
+	valid_acc : 0.53423,	valid_loss : 0.69013
+epoch : 3
+	train_acc : 0.55695,	train_loss : 0.68313
+	valid_acc : 0.52837,	valid_loss : 0.72745
+epoch : 4
+	train_acc : 0.56454,	train_loss : 0.67943
+	valid_acc : 0.53538,	valid_loss : 0.76199
+epoch : 5
+	train_acc : 0.57543,	train_loss : 0.67491
+	valid_acc : 0.56279,	valid_loss : 0.68277
+epoch : 6
+	train_acc : 0.58466,	train_loss : 0.66938
+	valid_acc : 0.55904,	valid_loss : 0.69814
+epoch : 7
+	train_acc : 0.595,	train_loss : 0.6648
+	valid_acc : 0.56529,	valid_loss : 0.68226
+epoch : 8
+	train_acc : 0.60111,	train_loss : 0.65946
+	valid_acc : 0.56308,	valid_loss : 0.68335
+epoch : 9
+	train_acc : 0.60993,	train_loss : 0.65514
+	valid_acc : 0.56846,	valid_loss : 0.68887
+epoch : 10
+	train_acc : 0.6238,	train_loss : 0.64304
+	valid_acc : 0.58481,	valid_loss : 0.6862
+epoch : 11
+	train_acc : 0.64,	train_loss : 0.63216
+	valid_acc : 0.58077,	valid_loss : 0.69078
+epoch : 12
+	train_acc : 0.64375,	train_loss : 0.62419
+	valid_acc : 0.58933,	valid_loss : 0.68257
+epoch : 13
+	train_acc : 0.65565,	train_loss : 0.61546
+	valid_acc : 0.58596,	valid_loss : 0.68449
+epoch : 14
+	train_acc : 0.66849,	train_loss : 0.60192
+	valid_acc : 0.58538,	valid_loss : 0.69634
+epoch : 15
+	train_acc : 0.69474,	train_loss : 0.57467
+	valid_acc : 0.585,	valid_loss : 0.70919
+epoch : 16
+	train_acc : 0.71103,	train_loss : 0.55461
+	valid_acc : 0.59298,	valid_loss : 0.72855
+epoch : 17
+	train_acc : 0.72846,	train_loss : 0.53281
+	valid_acc : 0.58375,	valid_loss : 0.72573
+epoch : 18
+	train_acc : 0.74358,	train_loss : 0.51026
+	valid_acc : 0.58587,	valid_loss : 0.72981
+epoch : 19
+	train_acc : 0.76175,	train_loss : 0.48562
+	valid_acc : 0.59288,	valid_loss : 0.75255
+==================== time : 457sec
+
+-----Transforms-----
+train_transform : Compose(
+    ToPILImage()
+    RandomHorizontalFlip(p=0.2)
+    RandomVerticalFlip(p=0.2)
+    RandomRotation(degrees=[-35.0, 35.0], resample=False, expand=False)
+    ToTensor()
+)
+valid_transform : Compose(
+    ToTensor()
+)
+-----Train Option-----
+batch_size : 16,	lr : 0.001,	epochs : 20
+lr_scheduler_step : 5,	lr_scheduler_gamma : 0.75
+
+epoch : 0
+	train_acc : 0.52291,	train_loss : 0.69695
+	valid_acc : 0.52269,	valid_loss : 0.76727
+epoch : 1
+	train_acc : 0.53644,	train_loss : 0.6898
+	valid_acc : 0.52519,	valid_loss : 0.69054
+epoch : 2
+	train_acc : 0.54856,	train_loss : 0.68678
+	valid_acc : 0.52952,	valid_loss : 0.69879
+epoch : 3
+	train_acc : 0.55474,	train_loss : 0.68393
+	valid_acc : 0.55673,	valid_loss : 0.68437
+epoch : 4
+	train_acc : 0.55933,	train_loss : 0.68131
+	valid_acc : 0.54606,	valid_loss : 0.69693
+epoch : 5
+	train_acc : 0.57127,	train_loss : 0.67685
+	valid_acc : 0.5501,	valid_loss : 0.70995
+epoch : 6
+	train_acc : 0.57803,	train_loss : 0.67235
+	valid_acc : 0.54567,	valid_loss : 0.69613
+epoch : 7
+	train_acc : 0.58825,	train_loss : 0.66919
+	valid_acc : 0.55635,	valid_loss : 0.69793
+epoch : 8
+	train_acc : 0.59125,	train_loss : 0.6644
+	valid_acc : 0.56135,	valid_loss : 0.6809
+epoch : 9
+	train_acc : 0.59986,	train_loss : 0.65964
+	valid_acc : 0.57615,	valid_loss : 0.67917
+epoch : 10
+	train_acc : 0.61654,	train_loss : 0.649
+	valid_acc : 0.585,	valid_loss : 0.6787
+epoch : 11
+	train_acc : 0.62377,	train_loss : 0.64184
+	valid_acc : 0.58875,	valid_loss : 0.66776
+epoch : 12
+	train_acc : 0.63466,	train_loss : 0.63303
+	valid_acc : 0.5849,	valid_loss : 0.6893
+epoch : 13
+	train_acc : 0.64675,	train_loss : 0.62455
+	valid_acc : 0.58817,	valid_loss : 0.6878
+epoch : 14
+	train_acc : 0.65464,	train_loss : 0.61401
+	valid_acc : 0.5801,	valid_loss : 0.70891
+epoch : 15
+	train_acc : 0.68022,	train_loss : 0.59181
+	valid_acc : 0.59,	valid_loss : 0.68483
+epoch : 16
+	train_acc : 0.69337,	train_loss : 0.57347
+	valid_acc : 0.59413,	valid_loss : 0.68342
+epoch : 17
+	train_acc : 0.70952,	train_loss : 0.55511
+	valid_acc : 0.58894,	valid_loss : 0.71602
+epoch : 18
+	train_acc : 0.7244,	train_loss : 0.53471
+	valid_acc : 0.58827,	valid_loss : 0.7089
+epoch : 19
+	train_acc : 0.74495,	train_loss : 0.51015
+	valid_acc : 0.59538,	valid_loss : 0.72569
+==================== time : 456sec
+
+-----Transforms-----
+train_transform : Compose(
+    ToPILImage()
+    RandomHorizontalFlip(p=0.2)
+    RandomVerticalFlip(p=0.2)
+    RandomRotation(degrees=[-25.0, 25.0], resample=False, expand=False)
+    ToTensor()
+)
+valid_transform : Compose(
+    ToTensor()
+)
+-----Train Option-----
+batch_size : 16,	lr : 0.001,	epochs : 20
+lr_scheduler_step : 5,	lr_scheduler_gamma : 0.75
+
+epoch : 0
+	train_acc : 0.52195,	train_loss : 0.69597
+	valid_acc : 0.53067,	valid_loss : 0.73258
+epoch : 1
+	train_acc : 0.53849,	train_loss : 0.68895
+	valid_acc : 0.5299,	valid_loss : 0.69964
+epoch : 2
+	train_acc : 0.5499,	train_loss : 0.68538
+	valid_acc : 0.5275,	valid_loss : 0.69488
+epoch : 3
+	train_acc : 0.55445,	train_loss : 0.68296
+	valid_acc : 0.54625,	valid_loss : 0.68816
+epoch : 4
+	train_acc : 0.56373,	train_loss : 0.67973
+	valid_acc : 0.52731,	valid_loss : 0.71604
+epoch : 5
+	train_acc : 0.57651,	train_loss : 0.67325
+	valid_acc : 0.55913,	valid_loss : 0.68336
+epoch : 6
+	train_acc : 0.58358,	train_loss : 0.66908
+	valid_acc : 0.56452,	valid_loss : 0.6874
+epoch : 7
+	train_acc : 0.59596,	train_loss : 0.66329
+	valid_acc : 0.56394,	valid_loss : 0.67969
+epoch : 8
+	train_acc : 0.60368,	train_loss : 0.65671
+	valid_acc : 0.57663,	valid_loss : 0.6813
+epoch : 9
+	train_acc : 0.61173,	train_loss : 0.65064
+	valid_acc : 0.56154,	valid_loss : 0.69461
+epoch : 10
+	train_acc : 0.63171,	train_loss : 0.63541
+	valid_acc : 0.57394,	valid_loss : 0.69427
+epoch : 11
+	train_acc : 0.64639,	train_loss : 0.62269
+	valid_acc : 0.58404,	valid_loss : 0.68821
+epoch : 12
+	train_acc : 0.66322,	train_loss : 0.60782
+	valid_acc : 0.57933,	valid_loss : 0.69694
+epoch : 13
+	train_acc : 0.67971,	train_loss : 0.59311
+	valid_acc : 0.57558,	valid_loss : 0.71028
+epoch : 14
+	train_acc : 0.68769,	train_loss : 0.57986
+	valid_acc : 0.56702,	valid_loss : 0.74784
+epoch : 15
+	train_acc : 0.71726,	train_loss : 0.54755
+	valid_acc : 0.5749,	valid_loss : 0.73806
+epoch : 16
+	train_acc : 0.74041,	train_loss : 0.51605
+	valid_acc : 0.57538,	valid_loss : 0.75372
+epoch : 17
+	train_acc : 0.75998,	train_loss : 0.48535
+	valid_acc : 0.57875,	valid_loss : 0.76922
+epoch : 18
+	train_acc : 0.77873,	train_loss : 0.45712
+	valid_acc : 0.57942,	valid_loss : 0.79225
+epoch : 19
+	train_acc : 0.80029,	train_loss : 0.42621
+	valid_acc : 0.58231,	valid_loss : 0.81448
+==================== time : 456sec
+
