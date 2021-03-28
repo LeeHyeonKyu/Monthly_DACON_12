@@ -45,7 +45,7 @@ ___
 |21.02.22 ~ 23|성능 개선 실험|Augmentation and Hyper-params에 따른 성능 변화 실험|
 |21.02.24 ~ 27|EfficientNet Training and Submit|Public Score 0.855 달성|
 |21.02.28 ~ 03.01|Team Prediction Esemble|Public Score 0.867 달성|
-|21.03.02 ~ 08|Docker 구성 및 Code 제출|Private Score 0.869 달성|
+|21.03.02 ~ 08|Docker 구성 및 Code 제출|Private Score 0.869 및 최종 순위 달성|
 
 ### 한계점 및 개선사항
 1. Test Time Augmentation을 적용하지 못했다.
