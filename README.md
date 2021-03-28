@@ -8,11 +8,11 @@ ___
 ## 성과
 
 ### 최종 순위 9위 달성
-![ranking](./img/ranking.jfif)  
+![ranking](./img/ranking.jfif){: widht="300", height="300"}  
 ([link](https://dacon.io/competitions/official/235697/talkboard/402704?page=1&dtype=recent))
 
 ### Dacon 공식 Facebook에서 Code 공유
-![facebook](./img/facebook.png)  
+![facebook](./img/facebook.png){: widht="300", height="300"}  
 ([link](https://www.facebook.com/dacon.io/))
 
 ___
@@ -59,19 +59,19 @@ ___
 ## 문제 상황 및 극복 방안
 
 ### Backbone Model 탐색  
-Backbone Model을 탐색하는데 필요 이상의 시간이 들었다고 판단한다.  
+Backbone Model을 탐색하는데 많은 시간을 소요했다.  
 우리 팀은 각자 관심 Model을 선정하고 성능을 테스트해보기로 했다.  
-나는 마침 당시에 VGG 논문을 읽고 있었는데, RepVGG의 자극적인 제목에 관심이 쏠렸다. 
+나는 마침 당시에 VGG 논문을 읽고 있었고, `RepVGG`의 자극적인 제목에 관심이 쏠렸다.  
 (논문의 제목은 `RepVGG: Making VGG-style ConvNets Great Again`이다.)  
-실제로 RepVGG를 통해 나쁘지 않은 Score를 얻긴 했으나, 그 이상의 진전은 어렵다고 판단 됐다. 팀원이 선택했던 Model에서도 더 좋은 Score를 거두지 못했고, Backbone Model 재탐색의 시간을 가졌다.
+실제로 RepVGG를 준수한 Score를 얻긴 했으나, 그 이상의 진전은 어렵다고 판단 됐다.  팀원이 선택했던 Model에서도 더 좋은 Score를 거두지 못했고, Backbone Model 재탐색의 시간을 가졌다.
 
-Papers-with-code 사이트([Link](https://paperswithcode.com/sota/image-classification-on-imagenet)) 덕분에 SOTA Model이 무엇인지 알게 되었고, 우리 팀은 EfficientNet을 Backbone Model로 설정할 수 있었다. (실제로 상위권에 있는 모든 팀은 EfficientNet을 Backbone Model로 사용했다.([Link](https://dacon.io/competitions/official/235697/codeshare/)))
+Papers-with-code 사이트 ([Link](https://paperswithcode.com/sota/image-classification-on-imagenet)) 덕분에 Model의 객관적인 성능을 파악할 수 있었고, 우리 팀은 SOTA Model인 EfficientNet을 Backbone Model로 결정했다.  (실제로 상위권에 있는 모든 팀은 EfficientNet을 사용했다. ([Link](https://dacon.io/competitions/official/235697/codeshare/)))
 
 ### Training Time의 문제  
 최종적으로 EfficientNet b7을 Backbone으로 사용했는데, 한 Epoch 당 40분 가량의 시간이 소요됐다. 모델을 순차적으로 학습시키기에는 시간이 턱없이 부족했다.
 
 이 문제를 해결하기 위해 Colab의 Session을 다중으로 사용하는 아이디어를 제시했다.  
-각 Notebook File이 해당 Fold에 대해서만 동작하도록 개인 Code를 구성했다.([Code](./EfficientNet_silu.ipynb))
+각 Notebook File이 해당 Fold에 대해서만 동작하도록 개인 Code를 구성했다. ([Code](./EfficientNet_silu.ipynb))  
 이를 통해서 각 Fold에 해당하는 Model을 동시에 학습 시킬 수 있었다.  
 ```
 # Set train env
@@ -87,7 +87,7 @@ now_train_folds = [0, 1, 2, 3, 4]  ## if started in checkpoint change this to 0~
 Session의 종료로 인한 학습 재개나, 각각의 Session이 Data Set을 일관적으로 사용하지 못한다고 판단했다.  
 Random Seed를 고정하더라도, 매번 Fold Index를 구하는 것은 불안정한 Code라고 생각했다.
 
-Fold Index를 File로 저장하는 방법을 통해 이를 해결했다. File을 통해 일관성 있는 Index를 사용할 수 있도록 Code를 구성했다.  
+Fold Index를 File로 저장하는 아이디어를 통해 이를 해결했다. 이를 통해 Train Set과 Validation Set을 일관성 있게 사용할 수 있었다.  
 ```
 # Load train and validation index
 '''
@@ -113,7 +113,8 @@ else :
 Colab 환경에서 50,000장의 Image를 `cv2.load`로 Load 하는데 매우 많은 시간이 소요되었다.  
 각 Session에서 매번 이 과정을 거치기 때문에, 이에 대한 부분을 개선할 필요가 있었다.
 
-NumPy File로 저장하는 아이디어를 통해 이 문제를 해결했다. 기존에 약 50분 걸리던 과정을 최대 3분 이내로 단축시켰다.
+NumPy File로 저장하는 아이디어를 통해 이 문제를 해결했다.  
+이를 통해, 기존에 약 50분 걸리던 과정을 최장 3분 이내로 단축시켰다.  
 ```
 # Load Images
 '''
@@ -140,5 +141,5 @@ else :
 
 ### 성능 향상의 문제
 Model의 성능을 향상을 위해 다양한 실험이 필요했다.  
-실험의 당위성과 속도 향상을 위해 Label을 고려한 2,000장의 Image로 실험을 진행했다. 실험의 결과를 지속적으로 관찰하기 위해 Log를 남기도록 Code를 구성했다.([Code](./Training_Options_Experiment.ipynb))  
+실험의 당위성과 속도 향상을 위해 Label을 고려한 2,000장의 Image로 실험을 진행했다. 실험의 결과를 지속적으로 관찰하기 위해 Log를 남기도록 Code를 구성했다. ([Code](./Training_Options_Experiment.ipynb))  
 각 설정에 따른 성능 정보는 `Training_Options_Experiment_Logs` 디렉토리 아래의 Log File이나, Code의 결과 Cell을 통해 확인할 수 있다. ([Directory](./Training_Options_Experiment_Logs))
