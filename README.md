@@ -8,11 +8,11 @@ ___
 ## 성과
 
 ### 최종 순위 9위 달성
-![ranking](./img/ranking.jfif){: widht="300", height="300"}  
+![ranking](./img/ranking.jfif){: widht="50%", height="50%"}  
 ([link](https://dacon.io/competitions/official/235697/talkboard/402704?page=1&dtype=recent))
 
 ### Dacon 공식 Facebook에서 Code 공유
-![facebook](./img/facebook.png){: widht="300", height="300"}  
+![facebook](./img/facebook.png){: widht="50%", height="50%"}  
 ([link](https://www.facebook.com/dacon.io/))
 
 ___
