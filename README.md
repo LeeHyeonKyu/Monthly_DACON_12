@@ -47,13 +47,6 @@ ___
 |21.02.28 ~ 03.01|Team Prediction Esemble|Public Score 0.867 달성|
 |21.03.02 ~ 08|Docker 구성 및 Code 제출|Private Score 0.869 및 최종 순위 달성|
 
-### 한계점 및 개선사항
-1. Test Time Augmentation을 적용하지 못했다.
-2. Loss Function과 Acivation Function에 대한 탐색이 부족했다.
-3. Augmentation 외에 Image에 대한 직접적인 전처리가 없었다.
-4. Backbone Model 탐색에 시간 소요가 길었다.
-5. Batch Size에 따른 성능 변화를 간과했다.
-
 ___
 
 ## 문제 상황 및 극복 방안
@@ -141,5 +134,93 @@ else :
 
 ### 성능 향상의 문제
 Model의 성능을 향상을 위해 다양한 실험이 필요했다.  
-실험의 당위성과 속도 향상을 위해 Label을 고려한 2,000장의 Image로 실험을 진행했다. 실험의 결과를 지속적으로 관찰하기 위해 Log를 남기도록 Code를 구성했다. ([Code](./Training_Options_Experiment.ipynb))  
+실험의 당위성과 속도 향상을 위해 Label을 고려한 2,000장의 Image로 실험을 설계했다.  
+실험의 결과를 지속적으로 확인하기 위해 Log를 남기도록 Code를 구성했다. ([Code](./Training_Options_Experiment.ipynb))  
 각 설정에 따른 성능 정보는 `Training_Options_Experiment_Logs` 디렉토리 아래의 Log File이나, Code의 결과 Cell을 통해 확인할 수 있다. ([Directory](./Training_Options_Experiment_Logs))
+
+### Cuda Out of Memory Issue  
+실험 결과 적합한 Augmentation을 찾았으나, Resize 시 Memory 이슈가 발생했다.  
+Resize가 큰 폭으로 성능을 향상시키는 것을 확인했기 때문에, Batch Size를 작게 설정하여 학습을 진행했다.
+```
+# Set augmentation and transform
+'''
+실험을 통해 좋은 성과를 낸다고 판단된 augmentation을 train_set에 적용했습니다.
+모델의 학습 환경에서 augmentation은 제외하고, transform만 동일하게 valid_set에 적용합니다.
+'''
+
+train_transform = T.Compose([
+    T.ToPILImage(),
+    T.Resize((331,331)),
+    T.RandomHorizontalFlip(p=0.6),
+    T.RandomVerticalFlip(p=0.6),
+    T.RandomRotation(40),
+    T.ToTensor(),
+    T.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
+])
+
+valid_transform = T.Compose([
+    T.ToPILImage(),
+    T.Resize((331,331)),
+    T.ToTensor(),
+    T.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
+])
+
+# Set hyper parameters
+'''
+모델의 크기와 resize와 같은 이유로 작은 batch size를 사용했습니다.
+세션의 종료 등의 이슈로 체크포인트로부터 학습을 재개하는 경우 lr의 값을 변경할 필요가 있습니다.
+'''
+
+batch_size = 8
+lr = 0.001  ## if started in checkpoint change this (ex. lr = 0.001 * (0.75 ** 5))
+epochs = 25
+lr_scheduler_step = 5
+lr_scheduler_gamma = 0.75
+```
+
+### Session 종료 등으로 인한 Issue  
+Session이 종료 되더라도, 재학습이 가능하도록 Code를 구성할 필요가 있었다.  
+매 Epoch마다 Validation Loss를 Check하고, Model State Dict를 저장하도록 Code를 구성했다.  
+각 File은 몇 번의 Epoch를 수행했는지에 대한 정보를 저장해, 해당 시점부터 학습을 재개할 수 있도록 설계했다.  
+또한, Google Drive의 Memory Issue를 피하기 위한 장치도 마련했다.  
+```
+# Train in fold
+'''
+체크포인트로부터 학습을 재개하는 경우 ##로 표시된 부분을 변경할 필요가 있습니다.
+체크포인트를 로드 할 수 있도록 파일 명을 기재해야 합니다. (model directory 참고)
+체크포인트의 val_loss값을 valid_loss_min으로 설정해야 합니다.
+체크포인트의 epoch만큼 pass한 후 학습되도록 설정해야 합니다.
+
+validation 수행 시 해당 epoch의 평균 loss가 계산되도록 설정해야 합니다.
+valid_loss가 valid_loss_min보다 작은 경우 더 좋은 모델로 판단하고,
+해당 폴드의 이전 모델을 0byte로 만들고 삭제한 후 모델의 state_dict를 저장합니다.
+'''
+
+for fold in now_train_folds :
+    # Modeling
+    model = MnistEfficientNet(in_channels=3).to(device)
+    # model.load_state_dict(torch.load(''))  ## if started in checkpoint change this to best model of now fold (ex. 'model/4fold_24epoch_0.1989_silu.pth')
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    lr_scheduler = torch.optim.lr_scheduler.StepLR(
+        optimizer, step_size=lr_scheduler_step, gamma=lr_scheduler_gamma)
+    criterion = torch.nn.BCELoss()
+
+...(중략)...
+
+        if valid_loss < valid_loss_min :
+            valid_loss_min = valid_loss
+            for f in glob.glob(os.path.join(model_path, str(fold)+'*_silu.pth')) :  # if you want to train another model, change this
+                open(os.path.join(model_path, f), 'w').close()
+                os.remove(os.path.join(model_path, f))
+            torch.save(model.state_dict(), f'{model_path}/{fold}fold_{epoch}epoch_{valid_loss:2.4f}_silu.pth') # if you want to train another model, change this
+```
+
+___
+
+
+## 한계점 및 개선사항
+1. Test Time Augmentation을 적용하지 못했다.
+2. Loss Function과 Acivation Function에 대한 탐색이 부족했다.
+3. Augmentation 외에 Image에 대한 직접적인 전처리가 없었다.
+4. Backbone Model 탐색에 시간 소요가 길었다.
+5. Batch Size에 따른 성능 변화를 간과했다.
