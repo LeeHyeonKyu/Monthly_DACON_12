@@ -11,6 +11,7 @@ ___
 ([link](https://dacon.io/competitions/official/235697/talkboard/402704?page=1&dtype=recent))  
 <img alt="ranking" src="./img/ranking.jfif"  width="50%" height="50%">
 
+
 ### Dacon 공식 Facebook에서 Code 공유
 ([link](https://www.facebook.com/dacon.io/))  
 <img alt="facebook" src="./img/facebook.png"  width="50%" height="50%">
@@ -21,6 +22,7 @@ ___
 
 ### 대회 설명
 (256, 256)크기의 이미지 속에 10 ~ 14개의 글자(알파벳 a – Z, 중복 제외)가 무작위로 배치되어 있습니다. 이번 대회의 문제는 이러한 이미지 속에 들어있는 알파벳과 들어있지 않은 알파벳을 분류하는 multi-label classification입니다.	([link](https://dacon.io/competitions/official/235697/overview/description#desc-info))  
+
 
 ### 대회 배경
 컴퓨터 비전은 가장 빠르게 발전하는 인공 지능 분야 중 하나로 학계, 산업계에서 많은 연구가 이루어지고 있습니다. 손글씨 이미지인 MNIST 데이터 세트는 이 분야의 고전적인 문제로 잘 알려져 있는데요, 이번 월간 데이콘 12는 월간 데이콘 7의 후속작으로 무작위로 합성된 10 ~ 15개의 글자를 분류하는 multi-label classification대회입니다. 월간 데이콘 12에서 컴퓨터 비전 실력을 업그레이드해보세요! ([link](https://dacon.io/competitions/official/235697/overview/description#desc-info))  
@@ -33,6 +35,7 @@ ___
 팀 닉네임 : 함께하는우리  
 팀원 : Boostcamp Peers (박재우, 박창협)  
 개발 환경 : Python, Colab
+
 
 ### 참여 일정
 |일시|내용|비고|  
@@ -60,21 +63,83 @@ Backbone Model을 탐색하는데 많은 시간을 소요했다.
 
 Papers-with-code 사이트 ([Link](https://paperswithcode.com/sota/image-classification-on-imagenet)) 덕분에 Model의 객관적인 성능을 파악할 수 있었고, 우리 팀은 SOTA Model인 EfficientNet을 Backbone Model로 결정했다.  (실제로 상위권에 있는 모든 팀은 EfficientNet을 사용했다. ([Link](https://dacon.io/competitions/official/235697/codeshare/)))
 
-### Training Time의 문제  
-최종적으로 EfficientNet b7을 Backbone으로 사용했는데, 한 Epoch 당 40분 가량의 시간이 소요됐다. 모델을 순차적으로 학습시키기에는 시간이 턱없이 부족했다.
 
-이 문제를 해결하기 위해 Colab의 Session을 다중으로 사용하는 아이디어를 제시했다.  
-각 Notebook File이 해당 Fold에 대해서만 동작하도록 개인 Code를 구성했다. ([Code](./EfficientNet_silu.ipynb))  
-이를 통해서 각 Fold에 해당하는 Model을 동시에 학습 시킬 수 있었다.  
+### Baseline Code의 한계  
+Baseline Code는 문제를 해결하거나, 다양한 실험을 하기에 적합하지 않았다.  
+이에, Baseline을 토대로 개인 Code를 작성했다. ([Code](./EfficientNet_silu.ipynb))  
+특히, Colab 환경에서 처할 수 있는 다양한 이슈에 대처할수 있도록 Code를 구성했다.  
+
+
+### 성능 향상의 문제
+Model의 성능을 향상을 위해 Augmentation과 Hyper-parameter에 대한 실험을 수행했다.    
+실험의 당위성과 속도 향상을 위해 Label을 고려한 2,000장의 Image로 실험을 설계했다.  
+실험의 결과를 지속적으로 확인하기 위해 Log를 남기도록 Code를 구성했다. ([Code](./Training_Options_Experiment.ipynb))  
+각 설정에 따른 성능 정보는 `Training_Options_Experiment_Logs` 디렉토리 아래의 Log File이나, Code의 결과 Cell을 통해 확인할 수 있다. ([Directory](./Training_Options_Experiment_Logs))
 ```
-# Set train env
+# 2000개의 data와 전체 train data간의 정답 분포 확인
 '''
-여러 세션을 통해 학습을 진행할 경우, now_train_folds에 원하는 fold만 기재하여 학습할 수 있습니다.
-이를 통해 여러 모델이 동시에 각 fold로 학습을 수행할 수 있습니다.
+약 1%내외의 차이를 보이며, 최대 2.1%까지 차이가 나는 것 확인
+2000개의 샘플데이터로 하는 테스트가 유의미하리라 판단
 '''
 
-now_train_folds = [0, 1, 2, 3, 4]  ## if started in checkpoint change this to 0~4 (ex. now_train_folds = [4])
+y_train.mean(axis=0) - y_train[:2000].mean(axis=0)
+
+
+# 각 실험의 설정을 log file에 기록
+f = open('train_option.log', 'a')
+f.write('-----Transforms-----\n')
+f.write(f'train_transform : {train_transform}\n')
+f.write(f'valid_transform : {valid_transform}\n')
+f.write('-----Train Option-----\n')
+f.write(f'batch_size : {batch_size},\tlr : {lr},\tepochs : {epochs}\n')
+f.write(f'lr_scheduler_step : {lr_scheduler_step},\tlr_scheduler_gamma : {lr_scheduler_gamma}\n\n')
+
+# 실험용 학습
+'''
+위의 설정에 따라 학습이 진행되고, 각 epoch마다 값들이 log file에 저장됨.
+'''
+start_time = time.time()
+for fold in range(1) :
+...(후략)...
 ```
+
+### Session 종료 등으로 인한 Issue  
+Session이 종료 되더라도, 재학습이 가능하도록 Code를 구성할 필요가 있었다.  
+매 Epoch마다 Validation Loss를 Check하고, Model State Dict를 저장하도록 Code를 구성했다.  
+각 File은 몇 번의 Epoch를 수행했는지에 대한 정보를 저장해, 해당 시점부터 학습을 재개할 수 있도록 설계했다.  
+또한, Google Drive의 Memory Issue를 피하기 위한 장치도 마련했다.  
+```
+# Train in fold
+'''
+체크포인트로부터 학습을 재개하는 경우 ##로 표시된 부분을 변경할 필요가 있습니다.
+체크포인트를 로드 할 수 있도록 파일 명을 기재해야 합니다. (model directory 참고)
+체크포인트의 val_loss값을 valid_loss_min으로 설정해야 합니다.
+체크포인트의 epoch만큼 pass한 후 학습되도록 설정해야 합니다.
+
+validation 수행 시 해당 epoch의 평균 loss가 계산되도록 설정해야 합니다.
+valid_loss가 valid_loss_min보다 작은 경우 더 좋은 모델로 판단하고,
+해당 폴드의 이전 모델을 0byte로 만들고 삭제한 후 모델의 state_dict를 저장합니다.
+'''
+
+for fold in now_train_folds :
+    # Modeling
+    model = MnistEfficientNet(in_channels=3).to(device)
+    # model.load_state_dict(torch.load(''))  ## if started in checkpoint change this to best model of now fold (ex. 'model/4fold_24epoch_0.1989_silu.pth')
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    lr_scheduler = torch.optim.lr_scheduler.StepLR(
+        optimizer, step_size=lr_scheduler_step, gamma=lr_scheduler_gamma)
+    criterion = torch.nn.BCELoss()
+
+...(중략)...
+
+        if valid_loss < valid_loss_min :
+            valid_loss_min = valid_loss
+            for f in glob.glob(os.path.join(model_path, str(fold)+'*_silu.pth')) :  # if you want to train another model, change this
+                open(os.path.join(model_path, f), 'w').close()
+                os.remove(os.path.join(model_path, f))
+            torch.save(model.state_dict(), f'{model_path}/{fold}fold_{epoch}epoch_{valid_loss:2.4f}_silu.pth') # if you want to train another model, change this
+```
+
 
 ### Data Set의 일관성 문제  
 Session의 종료로 인한 학습 재개나, 각각의 Session이 Data Set을 일관적으로 사용하지 못한다고 판단했다.  
@@ -101,6 +166,7 @@ else :
     with open('Train_KFold.pkl', 'wb') as f :
         pickle.dump(folds, f)
 ```
+
 
 ### Data Load간 시간 소요의 문제  
 Colab 환경에서 50,000장의 Image를 `cv2.load`로 Load 하는데 매우 많은 시간이 소요되었다.  
@@ -132,11 +198,6 @@ else :
     np.save('Imgs_Numpy.npy', imgs)
 ```
 
-### 성능 향상의 문제
-Model의 성능을 향상을 위해 다양한 실험이 필요했다.  
-실험의 당위성과 속도 향상을 위해 Label을 고려한 2,000장의 Image로 실험을 설계했다.  
-실험의 결과를 지속적으로 확인하기 위해 Log를 남기도록 Code를 구성했다. ([Code](./Training_Options_Experiment.ipynb))  
-각 설정에 따른 성능 정보는 `Training_Options_Experiment_Logs` 디렉토리 아래의 Log File이나, Code의 결과 Cell을 통해 확인할 수 있다. ([Directory](./Training_Options_Experiment_Logs))
 
 ### Cuda Out of Memory Issue  
 실험 결과 적합한 Augmentation을 찾았으나, Resize 시 Memory 이슈가 발생했다.  
@@ -176,43 +237,6 @@ lr = 0.001  ## if started in checkpoint change this (ex. lr = 0.001 * (0.75 ** 5
 epochs = 25
 lr_scheduler_step = 5
 lr_scheduler_gamma = 0.75
-```
-
-### Session 종료 등으로 인한 Issue  
-Session이 종료 되더라도, 재학습이 가능하도록 Code를 구성할 필요가 있었다.  
-매 Epoch마다 Validation Loss를 Check하고, Model State Dict를 저장하도록 Code를 구성했다.  
-각 File은 몇 번의 Epoch를 수행했는지에 대한 정보를 저장해, 해당 시점부터 학습을 재개할 수 있도록 설계했다.  
-또한, Google Drive의 Memory Issue를 피하기 위한 장치도 마련했다.  
-```
-# Train in fold
-'''
-체크포인트로부터 학습을 재개하는 경우 ##로 표시된 부분을 변경할 필요가 있습니다.
-체크포인트를 로드 할 수 있도록 파일 명을 기재해야 합니다. (model directory 참고)
-체크포인트의 val_loss값을 valid_loss_min으로 설정해야 합니다.
-체크포인트의 epoch만큼 pass한 후 학습되도록 설정해야 합니다.
-
-validation 수행 시 해당 epoch의 평균 loss가 계산되도록 설정해야 합니다.
-valid_loss가 valid_loss_min보다 작은 경우 더 좋은 모델로 판단하고,
-해당 폴드의 이전 모델을 0byte로 만들고 삭제한 후 모델의 state_dict를 저장합니다.
-'''
-
-for fold in now_train_folds :
-    # Modeling
-    model = MnistEfficientNet(in_channels=3).to(device)
-    # model.load_state_dict(torch.load(''))  ## if started in checkpoint change this to best model of now fold (ex. 'model/4fold_24epoch_0.1989_silu.pth')
-    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    lr_scheduler = torch.optim.lr_scheduler.StepLR(
-        optimizer, step_size=lr_scheduler_step, gamma=lr_scheduler_gamma)
-    criterion = torch.nn.BCELoss()
-
-...(중략)...
-
-        if valid_loss < valid_loss_min :
-            valid_loss_min = valid_loss
-            for f in glob.glob(os.path.join(model_path, str(fold)+'*_silu.pth')) :  # if you want to train another model, change this
-                open(os.path.join(model_path, f), 'w').close()
-                os.remove(os.path.join(model_path, f))
-            torch.save(model.state_dict(), f'{model_path}/{fold}fold_{epoch}epoch_{valid_loss:2.4f}_silu.pth') # if you want to train another model, change this
 ```
 
 ___
