@@ -243,7 +243,7 @@ ___
 
 
 ## 한계점 및 개선사항
-1. Test Time Augmentation을 적용 못했다.
+1. Test Time Augmentation 기법에 대한 실험을 하지 못했다.
 2. Loss Function과 Acivation Function에 대한 탐색이 부족했다.
 3. Augmentation 외에 Image에 대한 직접적인 전처리가 없었다.
 4. Backbone Model 탐색에 시간 소요가 길었다.
