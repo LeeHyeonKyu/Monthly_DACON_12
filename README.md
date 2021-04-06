@@ -75,6 +75,7 @@ Model의 성능을 향상을 위해 Augmentation과 Hyper-parameter에 대한 �
 실험의 당위성과 속도 향상을 위해 Label을 고려한 2,000장의 Image로 실험을 설계했다.  
 실험의 결과를 지속적으로 확인하기 위해 Log를 남기도록 Code를 구성했다. ([Code](./Training_Options_Experiment.ipynb))  
 각 설정에 따른 성능 정보는 `Training_Options_Experiment_Logs` 디렉토리 아래의 Log File이나, Code의 결과 Cell을 통해 확인할 수 있다. ([Directory](./Training_Options_Experiment_Logs))
+
 ```
 # 2000개의 data와 전체 train data간의 정답 분포 확인
 '''
