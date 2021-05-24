@@ -16,10 +16,10 @@ ___
 
 ___
 
-## 대회 개요
+## 🧗 대회 개요
 
 ### 대회 설명
-(256, 256)크기의 이미지 속에 10 ~ 14개의 글자(알파벳 a – Z, 중복 제외)가 무작위로 배치되어 있습니다. 이번 대회의 문제는 이러한 이미지 속에 들어있는 알파벳과 들어있지 않은 알파벳을 분류하는 multi-label classification입니다.	([link](https://dacon.io/competitions/official/235697/overview/description#desc-info))  
+(256, 256)크기의 이미지 속에 10 ~ 14개의 글자(알파벳 a – Z, 중복 제외)가 무작위로 배치되어 있습니다. 이번 대회의 문제는 이러한 이미지 속에 들어있는 알파벳과 들어있지 않은 알파벳을 분류하는 multi-label classification입니다. ([link](https://dacon.io/competitions/official/235697/overview/description#desc-info))  
 
 
 ### 대회 배경
