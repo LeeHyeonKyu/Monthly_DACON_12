@@ -5,16 +5,14 @@
 
 ___
 
-## 성과
+## 🥇 성과
 
 ### 최종 순위 9위 달성
-([link](https://dacon.io/competitions/official/235697/talkboard/402704?page=1&dtype=recent))  
-<img alt="ranking" src="./img/ranking.jfif"  width="50%" height="50%">
+<img alt="ranking" src="./img/ranking.jfif"  width="50%" height="50%"> ([link](https://dacon.io/competitions/official/235697/talkboard/402704?page=1&dtype=recent))  
 
 
 ### Dacon 공식 Facebook에서 Code 공유
-([link](https://www.facebook.com/dacon.io/))  
-<img alt="facebook" src="./img/facebook.png"  width="50%" height="50%">
+<img alt="facebook" src="./img/facebook.png"  width="50%" height="50%"> ([link](https://www.facebook.com/dacon.io/))  
 
 ___
 
@@ -29,7 +27,7 @@ ___
 
 ___
 
-## 대회 참여 개요
+## 📆 대회 참여 개요
 
 ### 팀 소개  
 팀 닉네임 : 함께하는우리  
@@ -52,7 +50,7 @@ ___
 
 ___
 
-## 문제 상황 및 극복 방안
+## 💡 문제 상황 및 극복 방안
 
 ### Backbone Model 탐색  
 Backbone Model을 탐색하는데 많은 시간을 소요했다.  
@@ -243,7 +241,7 @@ lr_scheduler_gamma = 0.75
 ___
 
 
-## 한계점 및 개선사항
+## 🏃 한계점 및 개선사항
 1. Test Time Augmentation 기법에 대한 실험을 하지 못했다.
 2. Loss Function과 Acivation Function에 대한 탐색이 부족했다.
 3. Augmentation 외에 Image에 대한 직접적인 전처리가 없었다.
